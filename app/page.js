@@ -1,5 +1,7 @@
 'use client';
-import { Box, dialogClasses, Stack, Typography, Button, Modal, TextField} from '@mui/material';
+import { Box, dialogClasses, Stack, Typography, Button, Modal, TextField, IconButton} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add'
 import { firestore } from '@/firebase';
 import { collection, doc, query, getDocs, setDoc, deleteDoc, getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
@@ -73,7 +75,7 @@ export default function Home() {
     }
     await updatePantry()
   }
-  
+
   return (
     <Box
       width="100vw"
@@ -83,6 +85,12 @@ export default function Home() {
       flexDirection="column"
       alignItems="center"
       gap ={2}
+      sx={{
+        backgroundImage: 'url(/pantryPic.jpg)',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+      }}
     >
        <Modal
         open={open}
@@ -144,18 +152,33 @@ export default function Home() {
                 {name.charAt(0).toUpperCase() + name.slice(1)}
               </Typography>
 
-              <Typography
-                variant = {'h3'}
-                color = {'#333'}
-                textAlign = {'center'}
+              <Box display="flex" alignItems="center" bgcolor="#ADD8E6" padding={1} borderRadius={2}>
+                <Typography
+                  variant={'h5'}
+                  color={'#333'}
+                  textAlign={'center'}
                 >
-                  quantity: {count}
+                  Quantity: {count}
+                </Typography>
+              </Box>
 
-              </Typography>
-            
-            <Button variant = "contained" onClick ={() => removeItem(name)}>
-              Remove
-            </Button>
+              <Box display="flex" alignItems="center" bgcolor="#00FF00" paddingX={2} borderRadius={2}>
+                <Typography variant={"h6"} color={'#333'} marginRight={1}>
+                  Add
+                </Typography>
+                <IconButton onClick={() => addItem(name)} size="large">
+                  <AddIcon />
+                </IconButton>
+              </Box>
+
+              <Box display="flex" alignItems="center" bgcolor="#FF0000" paddingX={2} borderRadius={2}>
+                <Typography variant={"h6"} color={'#333'} marginRight={1}>
+                  Remove
+                </Typography>
+                <IconButton onClick={() => removeItem(name)} size="large">
+                  <DeleteIcon />
+                </IconButton>
+              </Box>
             </Box>
           ))}
         </Stack>
